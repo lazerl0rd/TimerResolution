@@ -12,7 +12,7 @@ int main() {
 
     QueryPerformanceFrequency(&freq);
 
-    HMODULE hNtDll = LoadLibrary(L"NtDll.dll");
+    HMODULE hNtDll = LoadLibraryA("NtDll.dll");
 
     if (!hNtDll) {
         printf("LoadLibrary failed");

@@ -17,7 +17,7 @@ int main() {
     ULONG MinimumResolution, MaximumResolution, CurrentResolution;
     PROCESS_POWER_THROTTLING_STATE PowerThrottling;
 
-    HMODULE hNtDll = LoadLibrary(L"NtDll.dll");
+    HMODULE hNtDll = LoadLibraryA("NtDll.dll");
 
     if (!hNtDll) {
         printf("LoadLibrary failed");
