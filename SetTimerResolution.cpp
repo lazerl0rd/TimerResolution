@@ -12,7 +12,7 @@ typedef NTSTATUS(CALLBACK *NTSETTIMERRESOLUTION)(
     OUT PULONG CurrentInterval);
 
 int main() {
-    // FreeConsole(); // hides console
+    FreeConsole(); // hides console
 
     ULONG MaximumInterval, MinimumInterval, CurrentInterval;
     PROCESS_POWER_THROTTLING_STATE PowerThrottling;
