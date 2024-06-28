@@ -2,12 +2,12 @@
 #include <windows.h>
 
 typedef NTSTATUS(CALLBACK *NTQUERYTIMERRESOLUTION)(
-    OUT PULONG MinimumResolution,
-    OUT PULONG MaximumResolution,
-    OUT PULONG CurrentResolutionolution);
+    OUT PULONG MaximumInterval,
+    OUT PULONG MinimumInterval,
+    OUT PULONG CurrentInterval);
 
 int main() {
-    ULONG MinimumResolution, MaximumResolution, CurrentResolution;
+    ULONG MaximumInterval, MinimumInterval, CurrentInterval;
     LARGE_INTEGER start, end, freq;
 
     QueryPerformanceFrequency(&freq);
@@ -23,7 +23,7 @@ int main() {
 
     for (;;) {
         // get current resolution
-        if (NtQueryTimerResolution(&MinimumResolution, &MaximumResolution, &CurrentResolution)) {
+        if (NtQueryTimerResolution(&MaximumInterval, &MinimumInterval, &CurrentInterval)) {
             printf("NtQueryTimerResolution failed");
             return 1;
         }
@@ -36,8 +36,8 @@ int main() {
         double delta_s = (double)(end.QuadPart - start.QuadPart) / freq.QuadPart;
         double delta_ms = delta_s * 1000;
 
-        printf("Resolution: %lfms, Sleep(1) slept %lfms (delta: %lf)\n",
-               CurrentResolution / 10000.0, delta_ms, delta_ms - 1);
+        printf("Current timer interval: %lf ms\n Sleep(1) interval: %lf ms (delta: %lf)\n",
+               CurrentInterval / 10000.0, delta_ms, delta_ms - 1);
 
         Sleep(1000); // pause for a second between iterations
     }
